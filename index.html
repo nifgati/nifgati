@@ -1,238 +1,188 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nifgati.org</title>
-    <meta
-      name="description"
-      content="A quiet place for anyone who felt hurt by something said in the MDY Daf Yomi shiur by R’ Eli."
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nifgati.org</title>
 
-  <body>
-    <header class="header">
-      <div class="wrap">
-        <div class="brand">
-          <div class="brand-mark" aria-hidden="true"></div>
-          <div class="brand-text">
-            <h1>Nifgati</h1>
-            <p class="tagline">A quiet place to write what hurt.</p>
-          </div>
-        </div>
+  <meta name="description" content="A quiet space for those who felt hurt by something said in the MDY Daf Yomi shiur by R’ Eli." />
 
-        <nav class="nav">
-          <a href="#submit">Share</a>
-          <a href="#posts">Posts</a>
-          <a href="#about">About</a>
-        </nav>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<header class="header">
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div class="brand-text">
+        <h1>Nifgati</h1>
+        <p class="tagline">A quiet place to write what hurt.</p>
       </div>
-    </header>
+    </div>
 
-    <main class="wrap">
-      <section class="hero">
-        <h2>If something said in the shiur hurt you</h2>
-        <p>
-          This is a calm space for anyone who felt hurt, dismissed, embarrassed,
-          or shaken by something said in the MDY Daf Yomi shiur by R’ Eli.
-          <br /><br />
-          You can write what happened and what you wish had been
-          said instead. Keep it respectful, avoid naming private individuals,
-          and focus on your experience.
+    <nav class="nav">
+      <a href="#submit">Share</a>
+      <a href="#posts">Posts</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h2>If something said in the shiur hurt you</h2>
+    <p>
+      This space exists for anyone who felt hurt, dismissed, embarrassed,
+      or unsettled by something said in the MDY Daf Yomi shiur by R’ Eli.
+      <br /><br />
+      You can describe what happened, how it landed, and what you wish
+      had been said instead. Keep it respectful and focused on your experience.
+    </p>
+
+    <div class="hero-actions">
+      <a class="btn" href="#submit">Write your experience</a>
+      <a class="btn btn-ghost" href="#posts">Read posts</a>
+    </div>
+  </section>
+
+  <!-- SUBMIT -->
+  <section id="submit" class="panel">
+    <div class="panel-head">
+      <h3>Share what hurt</h3>
+      <p class="muted">
+        You may post anonymously. Please do not include private names,
+        addresses, or identifying details.
+      </p>
+    </div>
+
+    <form id="complaintForm" class="form" autocomplete="off">
+
+      <div class="grid">
+        <label class="field">
+          <span>Title</span>
+          <input id="title" type="text" maxlength="80" placeholder="What this was about" required />
+        </label>
+
+        <label class="field">
+          <span>What felt hurtful?</span>
+          <select id="category" required>
+            <option value="">Select one</option>
+            <option>A comment or joke</option>
+            <option>Tone or delivery</option>
+            <option>A generalization</option>
+            <option>A sensitive topic</option>
+            <option>Something about a group</option>
+            <option>Other</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="template-block">
+        <p class="muted tiny">If it helps, you can use this structure:</p>
+        <ul class="muted tiny">
+          <li><strong>What was the topic?</strong></li>
+          <li><strong>What part hurt?</strong></li>
+          <li><strong>How did it affect you?</strong></li>
+          <li><strong>What would you have wanted to hear instead?</strong></li>
+        </ul>
+      </div>
+
+      <label class="field">
+        <span>Your experience</span>
+        <textarea id="body" rows="8" maxlength="2000"
+          placeholder="Describe what was said (paraphrase if possible), how it affected you, and what you would have preferred."
+          required></textarea>
+      </label>
+
+      <div class="grid">
+        <label class="field">
+          <span>Display name (optional)</span>
+          <input id="name" type="text" maxlength="40" placeholder="Anonymous" />
+        </label>
+
+        <label class="field">
+          <span>When was the shiur? (optional)</span>
+          <input id="location" type="text" maxlength="40" placeholder="Approx date or masechta" />
+        </label>
+      </div>
+
+      <label class="check">
+        <input id="agree" type="checkbox" required />
+        <span>I will keep this respectful and avoid private identifying information.</span>
+      </label>
+
+      <div class="actions">
+        <button class="btn" type="submit">Post</button>
+        <button class="btn btn-ghost" type="reset">Clear</button>
+      </div>
+
+    </form>
+  </section>
+
+  <!-- POSTS -->
+  <section id="posts" class="panel">
+    <div class="panel-head">
+      <h3>Posts</h3>
+      <p class="muted">Experiences shared by listeners. Newest first.</p>
+    </div>
+
+    <div id="postsList" class="posts">
+      <!-- Firebase will render posts here -->
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="panel">
+    <div class="panel-head">
+      <h3>About this space</h3>
+      <p class="muted">
+        Nifgati is not a place to attack anyone. It is a space for those
+        who felt hurt to be heard calmly and respectfully.
+      </p>
+    </div>
+
+    <div class="about">
+      <div class="card">
+        <h4>Respect</h4>
+        <p class="muted">
+          Focus on your experience. Avoid insults or threats.
         </p>
-        <div class="hero-actions">
-          <a class="btn" href="#submit">Write your experience</a>
-          <a class="btn btn-ghost" href="#posts">Read posts</a>
-        </div>
-      </section>
+      </div>
 
-      <section id="submit" class="panel">
-        <div class="panel-head">
-          <h3>Share what hurt</h3>
-          <p class="muted">
-            You can post anonymously. Please don’t include private details,
-            names, addresses, phone numbers, or anything identifying.
-          </p>
-        </div>
+      <div class="card">
+        <h4>Privacy</h4>
+        <p class="muted">
+          Do not share personal phone numbers, addresses,
+          or identifying information.
+        </p>
+      </div>
 
-        <form id="complaintForm" class="form" autocomplete="off">
-          <div class="grid">
-            <label class="field">
-              <span>Title</span>
-              <input
-                id="title"
-                name="title"
-                type="text"
-                maxlength="80"
-                placeholder="What this was about"
-                required
-              />
-              <small class="hint">Max 80 characters.</small>
-            </label>
+      <div class="card">
+        <h4>Purpose</h4>
+        <p class="muted">
+          The goal is awareness and sensitivity, not hostility.
+        </p>
+      </div>
+    </div>
+  </section>
 
-            <label class="field">
-              <span>What felt hurtful?</span>
-              <select id="category" name="category" required>
-                <option value="">Select one</option>
-                <option>A comment or joke</option>
-                <option>Tone or delivery</option>
-                <option>A generalization</option>
-                <option>A sensitive topic</option>
-                <option>Something about a group</option>
-                <option>Other</option>
-              </select>
-            </label>
-          </div>
+  <footer class="footer">
+    <p class="muted tiny">© <span id="year"></span> Nifgati.org</p>
+  </footer>
 
-          <div class="post-template">
-            <p class="muted tiny" style="margin: 0 0 6px 0;">
-              If it helps, use this structure:
-            </p>
-            <ul class="muted tiny" style="margin: 0; padding-left: 18px; line-height: 1.6;">
-              <li><strong>What was the topic?</strong></li>
-              <li><strong>What part hurt?</strong></li>
-              <li><strong>How did it affect you?</strong></li>
-              <li><strong>What would you have wanted to hear instead?</strong></li>
-            </ul>
-          </div>
+</main>
 
-          <label class="field">
-            <span>Your experience</span>
-            <textarea
-              id="body"
-              name="body"
-              rows="9"
-              maxlength="2000"
-              placeholder="Write your experience here. Paraphrase instead of quoting exact lines if you can."
-              required
-            ></textarea>
-            <small class="hint">
-              Max 2000 characters. Paraphrase rather than quoting word-for-word if possible.
-            </small>
-          </label>
+<!-- Firebase App -->
+<script type="module" src="app-firebase.js"></script>
 
-          <div class="grid">
-            <label class="field">
-              <span>Display name (optional)</span>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                maxlength="40"
-                placeholder="Anonymous"
-              />
-              <small class="hint">Leave blank to post as Anonymous.</small>
-            </label>
-
-            <label class="field">
-              <span>When was the shiur? (optional)</span>
-              <input
-                id="location"
-                name="location"
-                type="text"
-                maxlength="40"
-                placeholder="Approx date or masechta"
-              />
-              <small class="hint">Example: “Early Feb 2026” or “Bava Metzia”.</small>
-            </label>
-          </div>
-
-          <label class="check">
-            <input id="agree" type="checkbox" required />
-            <span>
-              I will keep this respectful and avoid private or identifying information.
-            </span>
-          </label>
-
-          <div class="actions">
-            <button class="btn" type="submit">Post</button>
-            <button class="btn btn-ghost" id="clearDraft" type="button">
-              Clear
-            </button>
-          </div>
-
-          <p class="muted tiny">
-            Note: On this starter version, posts save to your device only. If you want this
-            to be a real public board (shared by everyone), we’ll connect a database and add moderation tools.
-          </p>
-        </form>
-      </section>
-
-      <section id="posts" class="panel">
-        <div class="panel-head row">
-          <div>
-            <h3>Posts</h3>
-            <p class="muted">Experiences shared by listeners. Newest first.</p>
-          </div>
-
-          <div class="tools">
-            <input
-              id="search"
-              class="search"
-              type="search"
-              placeholder="Search posts"
-            />
-            <select id="filter" class="filter">
-              <option value="all">All types</option>
-              <option value="A comment or joke">A comment or joke</option>
-              <option value="Tone or delivery">Tone or delivery</option>
-              <option value="A generalization">A generalization</option>
-              <option value="A sensitive topic">A sensitive topic</option>
-              <option value="Something about a group">Something about a group</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        <div id="postsList" class="posts"></div>
-
-        <div class="danger-zone">
-          <button id="wipeAll" class="btn btn-danger" type="button">
-            Delete all local posts
-          </button>
-          <p class="muted tiny">This only clears posts stored in your browser.</p>
-        </div>
-      </section>
-
-      <section id="about" class="panel">
-        <div class="panel-head">
-          <h3>About this space</h3>
-          <p class="muted">
-            Nifgati exists for people who felt hurt by something said in the MDY Daf Yomi shiur by R’ Eli,
-            and want a quiet place to put words to it.
-          </p>
-        </div>
-
-        <div class="about">
-          <div class="card">
-            <h4>Keep it respectful</h4>
-            <p class="muted">
-              Describe what landed for you and why. Avoid insults or threats.
-            </p>
-          </div>
-          <div class="card">
-            <h4>Protect privacy</h4>
-            <p class="muted">
-              Don’t post names, phone numbers, addresses, or identifying details.
-              Paraphrase rather than quoting exact lines.
-            </p>
-          </div>
-          <div class="card">
-            <h4>What this is and isn’t</h4>
-            <p class="muted">
-              This is not a place to “take down” anyone. It’s a place to be heard,
-              collect patterns, and encourage sensitivity going forward.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <footer class="footer">
-        <p class="muted tiny">© <span id="year"></span> Nifgati.org</p>
-      </footer>
-    </main>
-
-    <script src="app.js"></script>
-  </body>
+</body>
 </html>
