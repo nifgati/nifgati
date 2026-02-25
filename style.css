@@ -328,3 +328,14 @@ textarea:focus {
   font-size: 14px;
   color: #ccc;
 }
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.actions #formStatus {
+  flex-basis: 100%;
+  width: 100%;
+}
