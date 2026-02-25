@@ -11,6 +11,8 @@
   <link rel="shortcut icon" href="favicon.png" />
 
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Cloudflare Turnstile -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
@@ -19,14 +21,14 @@
 <header class="header">
   <div class="wrap">
     <div class="brand">
-      <div class="brand-mark"></div>
+      <div class="brand-mark" aria-hidden="true"></div>
       <div class="brand-text">
         <h1>Nifgati</h1>
         <p class="tagline">A quiet place to write what hurt.</p>
       </div>
     </div>
 
-    <nav class="nav">
+    <nav class="nav" aria-label="Primary">
       <a href="#submit">Share</a>
       <a href="#posts">Posts</a>
       <a href="#about">About</a>
@@ -37,14 +39,14 @@
 <main class="wrap">
 
   <!-- HERO -->
-  <section class="hero">
-    <h2>If something said in the shiur hurt you</h2>
+  <section class="hero" aria-labelledby="hero-title">
+    <h2 id="hero-title">If something said in the shiur hurt you</h2>
     <p>
-      This space exists for anyone who felt hurt, dismissed, embarrassed,
+      This space exists for anyone who have felt hurt, dismissed, embarrassed,
       or unsettled by something said in the MDY Daf Yomi shiur.
       <br /><br />
-      You can describe what happened and what you wish
-      had been said instead. Keep it respectful and focused on your experience.
+      You can describe what happened and what you wish had been said instead.
+      Keep it respectful and focused on your experience.
     </p>
 
     <div class="hero-actions">
@@ -54,16 +56,16 @@
   </section>
 
   <!-- SUBMIT -->
-  <section id="submit" class="panel">
+  <section id="submit" class="panel" aria-labelledby="submit-title">
     <div class="panel-head">
-      <h3>Share what hurt</h3>
+      <h3 id="submit-title">Share what hurt</h3>
       <p class="muted">
         You may post anonymously. Please do not include private names,
         addresses, or identifying details.
       </p>
     </div>
 
-    <form id="complaintForm" class="form" autocomplete="off" method="post">
+    <form id="complaintForm" class="form" autocomplete="off">
 
       <div class="grid">
         <label class="field">
@@ -123,24 +125,26 @@
         <span>I will keep this respectful and avoid private identifying information.</span>
       </label>
 
-      <div class="cf-turnstile"
-     data-sitekey="0x4AAAAAAChtWWMskY9n1EHD">
-</div>
+      <!-- Turnstile widget -->
+      <div class="turnstile-wrap">
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAChtWWMskY9n1EHD"></div>
+      </div>
 
-<div class="actions">
-  <button class="btn" type="submit">Post</button>
-  <button class="btn btn-ghost" type="reset">Clear</button>
-</div>
+      <div class="actions">
+        <button class="btn" type="submit">Post</button>
+        <button class="btn btn-ghost" type="reset">Clear</button>
+      </div>
 
-<div id="formStatus" class="form-message" aria-live="polite"></div>
+      <!-- Status message (kept OUTSIDE actions so it won't get squished) -->
+      <div id="formStatus" class="form-message" aria-live="polite"></div>
 
     </form>
   </section>
 
   <!-- POSTS -->
-  <section id="posts" class="panel">
+  <section id="posts" class="panel" aria-labelledby="posts-title">
     <div class="panel-head">
-      <h3>Posts</h3>
+      <h3 id="posts-title">Posts</h3>
       <p class="muted">Experiences shared by listeners. Newest first.</p>
     </div>
 
@@ -148,24 +152,24 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="panel">
+  <section id="about" class="panel" aria-labelledby="about-title">
     <div class="panel-head">
-      <h3>About this space</h3>
+      <h3 id="about-title">About this space</h3>
       <p class="muted">
         Nifgati is not a place to attack anyone. It is a space for those
         who felt hurt to be heard calmly and respectfully.
       </p>
     </div>
 
-    <div class="about">
-      <div class="card">
+    <div class="about-grid">
+      <div class="about-card">
         <h4>Respect</h4>
         <p class="muted">
           Focus on your experience. Avoid insults or threats.
         </p>
       </div>
 
-      <div class="card">
+      <div class="about-card">
         <h4>Privacy</h4>
         <p class="muted">
           Do not share personal phone numbers, addresses,
@@ -173,7 +177,7 @@
         </p>
       </div>
 
-      <div class="card">
+      <div class="about-card">
         <h4>Purpose</h4>
         <p class="muted">
           The goal is awareness and sensitivity, not hostility.
@@ -188,12 +192,7 @@
 
 </main>
 
-<!-- Main App (Supabase) -->
 <script src="app.js" defer></script>
 
 </body>
 </html>
-
-
-
-
