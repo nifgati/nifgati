@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nifgati.org</title>
 
-  <meta name="description" content="A quiet space for those who felt hurt by something said in the MDY Daf Yomi shiur." />
+  <meta name="description" content="A quiet space for those who have felt hurt by something said in the MDY Daf Yomi shiur." />
 
-  <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
   <link rel="shortcut icon" href="favicon.png" />
 
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -64,7 +62,7 @@
       </p>
     </div>
 
-    <form id="complaintForm" class="form" autocomplete="off">
+    <form id="complaintForm" class="form" autocomplete="off" method="post">
 
       <div class="grid">
         <label class="field">
@@ -98,9 +96,13 @@
 
       <label class="field">
         <span>Your experience</span>
-        <textarea id="body" rows="8" maxlength="2000"
+        <textarea
+          id="body"
+          rows="8"
+          maxlength="2000"
           placeholder="Describe what was said (paraphrase if possible), how it affected you, and what you would have preferred."
-          required></textarea>
+          required
+        ></textarea>
       </label>
 
       <div class="grid">
@@ -120,12 +122,11 @@
         <span>I will keep this respectful and avoid private identifying information.</span>
       </label>
 
-     <div class="actions">
-  <button class="btn" type="submit">Post</button>
-  <button class="btn btn-ghost" type="reset">Clear</button>
-
-  <span id="formStatus" class="muted tiny" aria-live="polite"></span>
-</div>
+      <div class="actions">
+        <button class="btn" type="submit">Post</button>
+        <button class="btn btn-ghost" type="reset">Clear</button>
+        <span id="formStatus" class="muted tiny" aria-live="polite"></span>
+      </div>
 
     </form>
   </section>
@@ -137,9 +138,7 @@
       <p class="muted">Experiences shared by listeners. Newest first.</p>
     </div>
 
-    <div id="postsList" class="posts">
-      <!-- Firebase will render posts here -->
-    </div>
+    <div id="postsList" class="posts"></div>
   </section>
 
   <!-- ABOUT -->
@@ -183,9 +182,8 @@
 
 </main>
 
-<!-- Firebase App -->
-<script type="module" src="app-firebase.js"></script>
+<!-- Main App (Supabase) -->
+<script src="app.js" defer></script>
 
 </body>
 </html>
-
