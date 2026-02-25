@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Submit | Nifgati</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #ddd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+    }
+
+    h1 {
+      font-weight: normal;
+      margin-bottom: 10px;
+    }
+
+    p.description {
+      color: #888;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: #ddd;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #222;
+      border: 1px solid #444;
+      color: #ccc;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: #2a2a2a;
+    }
+
+    #formStatus {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+    }
+
+    a {
+      color: #666;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    a:hover {
+      color: #aaa;
+    }
+
+    .back {
+      margin-top: 25px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Submit a Complaint</h1>
+    <p class="description">
+      Say what you need to say. It will be received.
+    </p>
+
+    <form id="complaintForm" action="https://formspree.io/f/xgolrlre" method="POST">
+      <label>Name (optional)</label>
+      <input type="text" name="name">
+
+      <label>Your complaint</label>
+      <textarea name="message" rows="6" required></textarea>
+
+      <label>Email (optional)</label>
+      <input type="email" name="_replyto">
+
+      <input type="hidden" name="_subject" value="New Nifgati complaint">
+      <input type="text" name="_gotcha" style="display:none">
+
+      <button type="submit">Submit</button>
+
+      <p id="formStatus"></p>
+    </form>
+
+    <div class="back">
+      <a href="index.html">Return</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("complaintForm");
+    const statusEl = document.getElementById("formStatus");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusEl.textContent = "Sending...";
+
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { "Accept": "application/json" }
+        });
+
+        if (res.ok) {
+          form.reset();
+          statusEl.textContent = "Submitted.";
+        } else {
+          const data = await res.json().catch(() => ({}));
+          statusEl.textContent = data?.errors?.[0]?.message || "Something went wrong.";
+        }
+      } catch {
+        statusEl.textContent = "Network error.";
+      }
+    });
+  </script>
+
+</body>
+</html>
