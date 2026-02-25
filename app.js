@@ -128,10 +128,11 @@ form.addEventListener("submit", async (e) => {
 
   try {
     await insertPost(payload);
-    form.reset();
-    setStatus("Posted.");
-    window.location.hash = "#posts";
-    await render();
+form.reset();
+
+setStatus("Your post has been sent for approval.");
+
+window.location.hash = "#submit";
   } catch (err) {
     console.log(err);
     setStatus("Error posting. Check Supabase RLS policies.");
@@ -139,3 +140,4 @@ form.addEventListener("submit", async (e) => {
 });
 
 render();
+
