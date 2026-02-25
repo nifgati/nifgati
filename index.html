@@ -11,6 +11,7 @@
   <link rel="shortcut icon" href="favicon.png" />
 
   <link rel="stylesheet" href="style.css" />
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 
 <body>
@@ -122,11 +123,15 @@
         <span>I will keep this respectful and avoid private identifying information.</span>
       </label>
 
-      <div class="actions">
-        <button class="btn" type="submit">Post</button>
-        <button class="btn btn-ghost" type="reset">Clear</button>
-        <div id="formStatus" class="form-message" aria-live="polite"></div>
-      </div>
+      <div class="cf-turnstile"
+     data-sitekey="0x4AAAAAAChtWWMskY9n1EHD">
+</div>
+
+<div class="actions">
+  <button class="btn" type="submit">Post</button>
+  <button class="btn btn-ghost" type="reset">Clear</button>
+  <div id="formStatus" class="form-message" aria-live="polite"></div>
+</div>
 
     </form>
   </section>
@@ -187,5 +192,6 @@
 
 </body>
 </html>
+
 
 
