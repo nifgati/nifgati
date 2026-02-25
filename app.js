@@ -1,21 +1,21 @@
-// Supabase config (yours)
+// Nifgati.org - Public feed (approved only) + Captcha-protected submissions via Cloudflare Worker
+
+// Supabase (public read only)
 const SUPABASE_URL = "https://occbwdcdhljrtdlxtunq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_NkVM9hDUVaJdeGYkJgi-EA_VYD8wByW";
-
-// REST endpoint for your table
 const POSTS_ENDPOINT = `${SUPABASE_URL}/rest/v1/posts`;
+
+// Cloudflare Worker (handles Turnstile verification + inserts into Supabase)
+const WORKER_ENDPOINT = "https://nifgati-submit.accounts-f74.workers.dev";
 
 const $ = (sel) => document.querySelector(sel);
 
 const form = $("#complaintForm");
 const postsList = $("#postsList");
 const yearEl = $("#year");
+const statusEl = $("#formStatus");
 
-// If you keep the status span from my earlier suggestion, this will use it.
-// If not present, it will just skip status messages.
-let statusEl = $("#formStatus");
-
-yearEl.textContent = new Date().getFullYear();
+if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 function escapeHtml(str) {
   return String(str || "")
@@ -39,10 +39,11 @@ function formatDate(iso) {
 
 function setStatus(msg) {
   if (!statusEl) return;
-  statusEl.textContent = msg;
+  statusEl.textContent = msg || "";
 }
 
-async function fetchPosts() {
+async function fetchApprovedPosts() {
+  // RLS policy limits anon SELECT to status = 'approved'
   const url = `${POSTS_ENDPOINT}?select=*&order=created_at.desc`;
 
   const res = await fetch(url, {
@@ -52,36 +53,25 @@ async function fetchPosts() {
     },
   });
 
-  if (!res.ok) return [];
+  if (!res.ok) {
+    // optional: log for debugging
+    // console.log("fetchApprovedPosts failed:", await res.text());
+    return [];
+  }
+
   return await res.json();
 }
 
-async function insertPost(payload) {
-  const res = await fetch(POSTS_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${SUPABASE_KEY}`,
-      Prefer: "return=minimal",
-    },
-    body: JSON.stringify(payload),
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || "Insert failed");
-  }
-}
-
 async function render() {
-  const posts = await fetchPosts();
+  if (!postsList) return;
+
+  const posts = await fetchApprovedPosts();
 
   if (!posts.length) {
     postsList.innerHTML = `
       <div class="post">
         <h4 class="post-title">No posts yet</h4>
-        <p class="post-body muted">When you submit, it will appear here publicly.</p>
+        <p class="post-body muted">Approved posts will appear here.</p>
       </div>
     `;
     return;
@@ -113,31 +103,53 @@ async function render() {
     .join("");
 }
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+// Submit goes to Worker (captcha verification + insert). Public never inserts directly to Supabase.
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  setStatus("Posting...");
+    setStatus("Posting...");
 
-  const payload = {
-    title: $("#title").value.trim(),
-    category: $("#category").value.trim(),
-    message: $("#body").value.trim(),
-    name: ($("#name").value.trim() || null),
-    shiur_when: ($("#location").value.trim() || null),
-  };
+    const turnstileToken = window.turnstile?.getResponse();
+    if (!turnstileToken) {
+      setStatus("Please complete the captcha.");
+      return;
+    }
 
-  try {
-    await insertPost(payload);
-form.reset();
+    const payload = {
+      title: $("#title")?.value.trim() || "",
+      category: $("#category")?.value.trim() || "",
+      message: $("#body")?.value.trim() || "",
+      name: $("#name")?.value.trim() || null,
+      shiur_when: $("#location")?.value.trim() || null,
+      turnstileToken,
+    };
 
-setStatus("Your post has been sent for approval.");
+    try {
+      const res = await fetch(WORKER_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-window.location.hash = "#submit";
-  } catch (err) {
-    console.log(err);
-    setStatus("Error posting. Check Supabase RLS policies.");
-  }
-});
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data.ok) {
+        setStatus(data.error || "Error submitting post.");
+        return;
+      }
+
+      form.reset();
+      window.turnstile?.reset();
+      setStatus("Your post has been sent for approval.");
+
+      // stay on submit section
+      window.location.hash = "#submit";
+    } catch (err) {
+      // console.log(err);
+      setStatus("Network error.");
+    }
+  });
+}
 
 render();
-
