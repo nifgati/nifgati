@@ -8,7 +8,7 @@ const SUPABASE_KEY = "sb_publishable_NkVM9hDUVaJdeGYkJgi-EA_VYD8wByW";
 const POSTS_ENDPOINT = `${SUPABASE_URL}/rest/v1/posts`;
 
 // Cloudflare Worker (Turnstile verify + insert)
-const WORKER_ENDPOINT = "https://nifgati-submit.accounts-f74.workers.dev";
+const WORKER_ENDPOINT = "https://submit.nifgati.org";
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -191,3 +191,4 @@ if (form) {
 
 // Initial load
 renderPosts();
+
