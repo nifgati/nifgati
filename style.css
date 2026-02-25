@@ -339,3 +339,31 @@ textarea:focus {
   flex-basis: 100%;
   width: 100%;
 }
+/* About section spacing fix */
+.about,
+.about-grid {
+  padding: 22px;
+}
+
+/* If you use the new card classes from the rewritten HTML */
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.about-card {
+  background: rgba(12, 16, 22, 0.9);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.about-card h4 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.about-card p {
+  margin: 0;
+}
