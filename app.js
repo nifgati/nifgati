@@ -166,7 +166,8 @@ async function handleSubmit(e) {
     return;
   }
 
-  const payload = { ...formData, turnstileToken };
+  // ✅ FIX: send the Turnstile token under the name the Worker expects
+  const payload = { ...formData, "cf-turnstile-response": turnstileToken };
 
   try {
     const { ok, data } = await submitToWorker(payload);
@@ -191,4 +192,3 @@ if (form) {
 
 // Initial load
 renderPosts();
-
